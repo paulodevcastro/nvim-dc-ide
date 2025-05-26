@@ -9,7 +9,7 @@ return {
 		"williamboman/mason-lspconfig.nvim",
 		config = function()
 			require("mason-lspconfig").setup({
-				ensure_installed = { "lua_ls", "ts_ls" },
+				ensure_installed = { "lua_ls", "ts_ls", "cssls", "emmet_ls", "html" },
 			})
 		end,
 	},
@@ -22,6 +22,8 @@ return {
       -- Config LSPs
       lspconfig.lua_ls.setup({ capabilities = capabilities, })
       lspconfig.ts_ls.setup({ capabilities = capabilities, })
+      lspconfig.cssls.setup({ capabilities = capabilities, })
+      lspconfig.emmet_ls.setup({ capabilities = capabilities, })
 
       -- Keyboard Maps
       vim.keymap.set("n", "<leader>ch", vim.lsp.buf.hover, { desc = "[C]ode [H]over Documentation" })
