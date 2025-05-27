@@ -9,7 +9,7 @@ return {
 		"williamboman/mason-lspconfig.nvim",
 		config = function()
 			require("mason-lspconfig").setup({
-				ensure_installed = { "lua_ls", "ts_ls", "cssls", "emmet_ls", "html" },
+				ensure_installed = { "lua_ls", "ts_ls", "cssls", "emmet_ls", "html", "jsonls" },
 			})
 		end,
 	},
@@ -18,34 +18,18 @@ return {
 		config = function()
 			local lspconfig = require("lspconfig")
 			local capabilities = require("cmp_nvim_lsp").default_capabilities()
-			local util = require("lspconfig.util")
 
 			-- Config LSPs
 			lspconfig.lua_ls.setup({ capabilities = capabilities })
-			-- High config for ts_ls and js
-			lspconfig.ts_ls.setup({
-				capabilities = capabilities,
-				root_dir = function(fname)
-					return util.root_pattern("tsconfig.json", "jsconfig.json", "package.json", ".git")(fname)
-						or util.path.dirname(fname)
-				end,
-				settings = {
-					javascript = {
-						format = { enable = true },
-					},
-					typescript = {
-						format = { enable = true },
-					},
-				},
-			})
+			lspconfig.ts_ls.setup({ capabilities = capabilities })
 			lspconfig.cssls.setup({ capabilities = capabilities })
 			lspconfig.emmet_ls.setup({ capabilities = capabilities })
+			lspconfig.jsonls.setup({ capabilities = capabilities })
 
 			-- Keyboard Maps
 			vim.keymap.set("n", "<leader>ch", vim.lsp.buf.hover, { desc = "[C]ode [H]over Documentation" })
 			vim.keymap.set("n", "<leader>cd", vim.lsp.buf.definition, { desc = "[C]ode Goto [D]efinition" })
 			vim.keymap.set({ "n", "v" }, "<leader>ca", vim.lsp.buf.code_action, { desc = "[C]ode [A]ctions" })
-
 			vim.keymap.set(
 				"n",
 				"<leader>cr",
